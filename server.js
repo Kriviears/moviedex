@@ -39,20 +39,16 @@ app.use((error, req, res, next)=>{
 
 
 function handleGetMovies(req, res){
-  const { genre, country, avg_vote } = req.query;
-
   let response = moviedex;
+  const { genre, country, avg_vote } = req.query;
   
   if(genre){
-    console(genre);
-
     response = response.filter(movie =>
       movie.genre.includes(genre)
     );
   }
 
   if(country){
-    console(country);
     response = response.filter(movie =>
       movie.country.toLowerCase().includes(country.toLowerCase())    
     );
