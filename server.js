@@ -54,7 +54,7 @@ function handleGetMovies(req, res){
   if(country){
     console(country);
     response = response.filter(movie =>
-      movie.country.toLowerCase().includes(country.toLowerCase)    
+      movie.country.toLowerCase().includes(country.toLowerCase())    
     );
   }
 
