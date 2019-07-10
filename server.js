@@ -1,6 +1,5 @@
 'use strict';
 
-console.log('booting up');
 
 require('dotenv').config();
 const express = require('express');
@@ -8,10 +7,12 @@ const morgan = require('morgan');
 const helmet = require('helmet');
 const cors = require('cors');
 const moviedex = require('./moviedex.json');
+const PORT = process.env.PORT || 8000;
+const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common';
 
 const app = express();
 
-app.use(morgan('dev'));
+app.use(morgan(morganSetting));
 app.use(helmet());
 app.use(cors());
 
@@ -23,8 +24,18 @@ app.use(function validateBearerToken(req, res, next){
     return res.status(401).json({ error: 'Unauthorized request'});
   }
 
-  console.log('Request validation');
 });
+
+app.use((error, req, res, next)=>{
+  let response;
+  if(process.env.NODE_ENV === 'production'){
+    response = { error: {message: 'server error'}};
+  }else {
+    response = { error };
+  }
+  res.status(500).json(response);
+});
+
 
 function handleGetMovies(req, res){
   const { genre, country, avg_vote } = req.query;
@@ -57,8 +68,8 @@ function handleGetMovies(req, res){
 
 app.get('/moveis', handleGetMovies);
 
-const PORT = 8000;
+
 
 app.listen(PORT, ()=>{
-  console.log(`App is now running on port ${PORT}`);
+
 });
