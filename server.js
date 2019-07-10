@@ -44,7 +44,7 @@ function handleGetMovies(req, res){
   
   if(genre){
     response = response.filter(movie =>
-      movie.genre.includes(genre)
+      movie.genre.toLowerCase().includes(genre.toLowerCase())
     );
   }
 
@@ -56,7 +56,7 @@ function handleGetMovies(req, res){
 
   if(avg_vote){
     response = response.filter(movie =>
-      Number(movie.avg_vote) === avg_vote    
+      Number(movie.avg_vote) === Number(avg_vote)    
     );
   }
 
