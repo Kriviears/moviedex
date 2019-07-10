@@ -66,7 +66,7 @@ function handleGetMovies(req, res){
   res.json(response);
 }
 
-app.get('/moveis', handleGetMovies);
+app.get('/movies', handleGetMovies);
 
 
 
